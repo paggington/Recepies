@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -38,9 +39,9 @@ public class AddRecipePageController {
                                 @RequestParam("image") MultipartFile multipartFile,
                                 @RequestParam("string-for-ingredients") String string_of_ingredients,
                                 BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return "AddRecipePage/AddRecipePage";
-        }
+//        if(bindingResult.hasErrors()){
+//            return "AddRecipePage/AddRecipePage";
+//        }
         Long ElementIndex= recepyService.getMaxIDFromDb();
 
         String fileName=StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename())).substring

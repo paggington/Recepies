@@ -15,13 +15,19 @@ public class RecepyService {
 
     //getting List of Recipes From All Users Which marked as Hot
     public List<Recipe> getAllIsHot(){
-        List<Recipe> recipes=new ArrayList<Recipe>();
+        List<Recipe> HotRecipes=new ArrayList<Recipe>();
+        List<Recipe> Recipes=new ArrayList<Recipe>();
         for(Recipe recipe:recepyRepository.findAll()){
             if (recipe.isHot()){
-                recipes.add(recipe);
+                HotRecipes.add(recipe);
+            }else{
+                Recipes.add(recipe);
             }
         }
-        return recipes;
+        for(Recipe recipe:Recipes){
+            HotRecipes.add(recipe);
+        }
+        return HotRecipes;
     }
     //TODO:Make a validation
     public void saveNewRecipe(Recipe recipe){
