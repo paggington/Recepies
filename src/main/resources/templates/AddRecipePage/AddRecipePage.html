@@ -11,18 +11,46 @@
 <form th:action="@{/add}" th:method="POST" th:object="${recipe}" enctype="multipart/form-data">
     <div class="input-holder">
         <input type="text" th:field="*{name}" placeholder="Name" maxlength="100">
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
     </div>
     <div class="input-holder">
         <textarea name="description" id="description" cols="100" rows="10" placeholder="Description" th:field="*{description}" maxlength="1500"></textarea>
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</p>
     </div>
     <div class="input-holder">
         <input type="text" name="string-for-ingredients" placeholder="Ingredients(divide with ',')" maxlength="100">
+        <p th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">Ingredients Error</p>
     </div>
     <div class="input-holder">
-        <input type="file" name="image" accept="image/png,image/jpeg,image/jpg">
+        <input type="file" name="image" accept="image/png,image/jpg" id="fileUpload">
     </div>
-
-    <input type="submit" value="Add+">
+                                                            <p id="error-of-input-file" style="color: red"></p>
+    <input type="submit" value="Add+" id="button-submit">
+    <script type="text/javascript"
+            src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript">
+        $(function (){
+            $('#fileUpload').val('');
+            $('#fileUpload').change(function (event) {
+                if(!event.target.files[0].name.endsWith('.png') && !event.target.files[0].name.endsWith('.jpg') ){
+                    $('#error-of-input-file').text('Incorrect file type,try ".jpg" or ".png" ');
+                    $('#fileUpload').val('');
+                    $('#button-submit').attr('disabled','disabled');
+                }else{
+                    $('#error-of-input-file').text('');
+                    $('#button-submit').removeAttr('disabled');
+                }
+                if(event.target.files[0].size>1048576){
+                    $('#error-of-input-file').text('Size of a file is too big,try something else');
+                    $('#fileUpload').val('');
+                    $('#button-submit').attr('disabled','disabled');
+                }else{
+                    $('#error-of-input-file').text('');
+                    $('#button-submit').removeAttr('disabled');
+                }
+            })
+        })
+    </script>
 </form>
 </body>
 </html>

@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,13 @@ public class AddRecipePageController {
         return "AddRecipePage/AddRecipePage";
     }
     @PostMapping
-    public String postNewRecipe(@ModelAttribute Recipe recipe,@RequestParam("image") MultipartFile multipartFile,@RequestParam("string-for-ingredients") String string_of_ingredients){
+    public String postNewRecipe(@Valid @ModelAttribute Recipe recipe,
+                                @RequestParam("image") MultipartFile multipartFile,
+                                @RequestParam("string-for-ingredients") String string_of_ingredients,
+                                BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "AddRecipePage/AddRecipePage";
+        }
         Long ElementIndex= recepyService.getMaxIDFromDb();
 
         String fileName=StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename())).substring
