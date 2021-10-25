@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Your recipe</title>
+</head>
+<body>
+<form th:action="@{/add}" th:method="POST" th:object="${recipe}" enctype="multipart/form-data">
+    <div class="input-holder">
+        <input type="text" th:field="*{name}" placeholder="Name" maxlength="100">
+    </div>
+    <div class="input-holder">
+        <textarea name="description" id="description" cols="100" rows="10" placeholder="Description" th:field="*{description}" maxlength="1500"></textarea>
+    </div>
+    <div class="input-holder">
+        <input type="text" name="string-for-ingredients" placeholder="Ingredients(divide with ',')" maxlength="100">
+    </div>
+    <div class="input-holder">
+        <input type="file" name="image" accept="image/png,image/jpeg,image/jpg">
+    </div>
+
+    <input type="submit" value="Add+">
+</form>
+</body>
+</html>
