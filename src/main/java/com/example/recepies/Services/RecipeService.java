@@ -1,6 +1,6 @@
 package com.example.recepies.Services;
 
-import com.example.recepies.DbHelper.RecepyRepository;
+import com.example.recepies.DbHelper.RecipeRepository;
 import com.example.recepies.entities.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RecepyService {
+public class RecipeService {
     @Autowired
-    private RecepyRepository recepyRepository;
+    private RecipeRepository recepyRepository;
 
     //getting List of Recipes From All Users Which marked as Hot
     public List<Recipe> getAllIsHot(){
@@ -51,5 +51,10 @@ public class RecepyService {
         }
         return ingredients;
     }
-
+    public Recipe getItemByID(Long id){
+        return recepyRepository.getById(id);
+    }
+    public List<String> getIngredientsById(Long id){
+       return recepyRepository.getById(id).getIngredients();
+    }
 }

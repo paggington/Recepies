@@ -9,8 +9,24 @@
 
     <title>Add Your recipe</title>
 </head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+    }
+    body {
+        text-align: center;
+    }
+    form {
+        display: inline-block;
+    }
+    .input-holder{
+        margin-bottom: 20px;
+    }
+</style>
 <body>
-<form th:action="@{/add}" th:method="POST" th:object="${recipe}" enctype="multipart/form-data">
+<form th:action="@{/add}" th:method="POST" th:object="${recipe}" enctype="multipart/form-data" class="form-input">
     <div class="input-holder">
         <input type="text" th:field="*{name}" placeholder="Name" maxlength="100">
         <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
@@ -20,7 +36,8 @@
         <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</p>
     </div>
     <div class="input-holder">
-        <input type="text" name="string-for-ingredients" placeholder="Ingredients(divide with ',')" maxlength="100">
+        <input type="text" name="string-for-ingredients" id="ingredients-tab" placeholder="Ingredients(divide with ',')" maxlength="100">
+        <p id="error-ing"></p>
         <p th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">Ingredients Error</p>
     </div>
     <div class="input-holder">
@@ -51,6 +68,15 @@
                     $('#button-submit').removeAttr('disabled');
                 }
             })
+        })
+        $(function () {
+            if($("#ingredients-tab").val()===''){
+                $('#button-submit').attr('disabled','disabled');
+                $("#error-ing").text("Add at least one ingredient!");
+            }else{
+                $('#button-submit').removeAttr('disabled');
+            }
+
         })
     </script>
 </form>

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 @Repository("RecipesRepository")
-public interface RecepyRepository extends JpaRepository<Recipe,Long> {
+public interface RecipeRepository extends JpaRepository<Recipe,Long> {
     @Query("select max(o.id) from Recipe o")
     public Long getLastIDFromDB();
 }

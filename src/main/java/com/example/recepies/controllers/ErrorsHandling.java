@@ -23,6 +23,8 @@ public class ErrorsHandling implements ErrorController {
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return "errorsHandling/error-500";
+            }else if(statusCode == HttpStatus.HTTP_VERSION_NOT_SUPPORTED.value()){
+                return "errorsHandling/error-404";
             }
         }
         return "errorsHandling/error-404";
