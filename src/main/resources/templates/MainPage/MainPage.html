@@ -10,18 +10,41 @@
     <title>Top of the week</title>
 </head>
 <style>
+    *{
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+    }
     body {
         text-align: center;
     }
+    .form-input {
+        margin-bottom: 100px;
+        display: inline-block;
+    }
+    .input-holder{
+        margin-bottom: 20px;
+    }
+    .header{
+        background-color: aliceblue;
+        width: 100%;
+        float: left;margin-bottom: 50px;
+    }
+    .header h1{
+        float:left;
+    }
+    .header form{
+        margin-top:20px;
+    }
     .wrapper{
-        padding-top: 100px;
+        padding-top:100px;
     }
 </style>
 <body style="text-decoration: none">
-    <header class="header"  style="margin-bottom: 50px;position: fixed;">
+    <header class="header">
         <h1>KITCHEN SINK</h1>
         <form th:action="@{/search}" th:method="POST">
-            <input type="text" maxlength="100" placeholder="Search for a dish">
+            <input type="text" maxlength="100" placeholder="Search for a dish" id="field">
 
             <input type="checkbox" id="isHot">
             <label for="isHot">All dishes</label>
@@ -32,20 +55,16 @@
     </header>
     <div class="wrapper" th:each="recipe,reCount:${recipes}">
         <a  th:href="@{/recipies/{id}(id=${recipe.getId()})}"><div class="item-container">
-
             <div class="image-container">
                 <img th:src="${recipe.getFilepath()}" class="item-image" height="100" width="100">
             </div>
-
-            <h2 th:text="${recipe.getName()}"></h2>
-<!--            <img src="#" alt=""> FOR GIF-->
-
-            <p th:text="${recipe.getDescription()}"></p>
-
-            <div class="gif" th:if="${recipe.isHot()}">
-                <img src="static/pictures/gifs/hot.gif" width="2%">
+            <div class="name-container">
+                <h2 th:text="${recipe.getName()}"></h2>
+                <div class="gif" th:if="${recipe.isHot()}">
+                    <img src="static/pictures/gifs/hot.gif" width="2%">
+                </div>
             </div>
-
+            <p th:text="${recipe.getDescription()}"></p>
         </div>
         </a>
     </div>

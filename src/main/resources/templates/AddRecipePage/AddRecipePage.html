@@ -18,14 +18,38 @@
     body {
         text-align: center;
     }
-    form {
+    .form-input {
+        margin-bottom: 100px;
         display: inline-block;
     }
     .input-holder{
         margin-bottom: 20px;
     }
+    .header{
+        background-color: aliceblue;
+        width: 100%;
+        float: left;margin-bottom: 50px;
+    }
+    .header h1{
+        float:left;
+    }
+    .header form{
+        margin-top:20px;
+    }
 </style>
 <body>
+<header class="header">
+    <h1>KITCHEN SINK</h1>
+    <form th:action="@{/search}" th:method="POST">
+        <input type="text" maxlength="100" placeholder="Search for a dish">
+
+        <input type="checkbox" id="isHot">
+        <label for="isHot">All dishes</label>
+        <input type="checkbox" id="Ingredients-Search">
+        <label for="Ingredients-Search">Ingredients</label>
+        <input type="submit" value="search">
+    </form>
+</header>
 <form th:action="@{/add}" th:method="POST" th:object="${recipe}" enctype="multipart/form-data" class="form-input">
     <div class="input-holder">
         <input type="text" th:field="*{name}" placeholder="Name" maxlength="100">
@@ -33,7 +57,13 @@
     </div>
     <div class="input-holder">
         <textarea name="description" id="description" cols="100" rows="10" placeholder="Description" th:field="*{description}" maxlength="1500"></textarea>
-        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</p>
+        <script>
+            $(function () {
+
+            })
+        </script>
+        <p id="error-text"></p>
+        <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" >Description Error</p>
     </div>
     <div class="input-holder">
         <input type="text" name="string-for-ingredients" id="ingredients-tab" placeholder="Ingredients(divide with ',')" maxlength="100">
@@ -72,11 +102,18 @@
         $(function () {
             if($("#ingredients-tab").val()===''){
                 $('#button-submit').attr('disabled','disabled');
-                $("#error-ing").text("Add at least one ingredient!");
+                $("#error-ing").text('Add at least one ingredient!');
             }else{
+                $("#error-ing").text('');
                 $('#button-submit').removeAttr('disabled');
             }
-
+            if($("#description").val()===''){
+                $("#error-text").text("Description must be!");
+            }else if($("#description").text().size<=100){
+                $("#error-text").text("Description must be bigger than 100 symbols!");
+            }else{
+                $("#error-text").text('');
+            }
         })
     </script>
 </form>

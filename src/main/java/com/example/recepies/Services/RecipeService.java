@@ -57,4 +57,39 @@ public class RecipeService {
     public List<String> getIngredientsById(Long id){
        return recepyRepository.getById(id).getIngredients();
     }
+    public List<Recipe> searchWithCriteria(boolean isHot, boolean ing, String searchField) {
+        List<Recipe> allRecipes=recepyRepository.findAll();
+        if(!ing && searchField!=null && !isHot){
+            String finalSearchField = searchField;
+            allRecipes.removeIf(recipe -> !recipe.getName().contains(finalSearchField));
+            return allRecipes;
+        }else if(searchField!=null&& ing){
+            List<Recipe> filteredRecipes=new ArrayList<>();
+            if(!searchField.endsWith(",")){
+                searchField+=",";
+            }
+            String buffer_string="";
+            List<String> ingList=new ArrayList<>();
+            for(int i=0;i<searchField.length();i++){
+                if(searchField.charAt(i)==',' || searchField.charAt(i)=='.'){
+                    ingList.add(buffer_string);
+                }
+                searchField.substring(i,i+1).toLowerCase();
+                buffer_string+=searchField.charAt(i);
+            }
+            for (Recipe recipe:allRecipes){
+                int points=0;
+                for (String ingre:recipe.getIngredients()){
+                    if(ingList.contains(ingre.substring(0,1).toLowerCase())){
+                        points++;
+                    }
+                }
+                if(points>=1){
+                    filteredRecipes.add(recipe);
+                }
+            }
+            return filteredRecipes;
+        }
+        return null;
+    }
 }
