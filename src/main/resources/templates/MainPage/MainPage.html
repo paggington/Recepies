@@ -43,13 +43,13 @@
 <body style="text-decoration: none">
     <header class="header">
         <h1>KITCHEN SINK</h1>
-        <form th:action="@{/search}" th:method="POST">
-            <input type="text" maxlength="100" placeholder="Search for a dish" id="field">
+        <form th:action="@{/}" th:method="POST" th:object="${request}">
+            <input type="text" maxlength="100" placeholder="Search for a dish" id="field" th:field="*{field}">
 
-            <input type="checkbox" id="isHot">
+            <input type="checkbox" id="isHot" th:field="*{hot}">
             <label for="isHot">All dishes</label>
-            <input type="checkbox" id="Ingredients-Search">
-            <label for="Ingredients-Search">Ingredients</label>
+            <input type="checkbox" id="ings" th:field="*{ings}">
+            <label for="ings">Ingredients</label>
             <input type="submit" value="search">
         </form>
     </header>

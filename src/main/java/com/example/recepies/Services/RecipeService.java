@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -59,10 +60,13 @@ public class RecipeService {
     }
     public List<Recipe> searchWithCriteria(boolean isHot, boolean ing, String searchField) {
         List<Recipe> allRecipes=recepyRepository.findAll();
+        searchField=searchField.toLowerCase();
+        //для отсева по имени
         if(!ing && searchField!=null && !isHot){
             String finalSearchField = searchField;
-            allRecipes.removeIf(recipe -> !recipe.getName().contains(finalSearchField));
-            return allRecipes;
+            allRecipes.removeIf(recipe->!recipe.getName().toLowerCase().contains(finalSearchField));
+            return getHotOnTop(allRecipes);
+            //для отсева по ингредиентам
         }else if(searchField!=null&& ing){
             List<Recipe> filteredRecipes=new ArrayList<>();
             if(!searchField.endsWith(",")){
@@ -71,16 +75,16 @@ public class RecipeService {
             String buffer_string="";
             List<String> ingList=new ArrayList<>();
             for(int i=0;i<searchField.length();i++){
-                if(searchField.charAt(i)==',' || searchField.charAt(i)=='.'){
+                if(searchField.charAt(i)==',' || searchField.charAt(i)==' '){
                     ingList.add(buffer_string);
+                    buffer_string="";
                 }
-                searchField.substring(i,i+1).toLowerCase();
                 buffer_string+=searchField.charAt(i);
             }
             for (Recipe recipe:allRecipes){
                 int points=0;
                 for (String ingre:recipe.getIngredients()){
-                    if(ingList.contains(ingre.substring(0,1).toLowerCase())){
+                    if(ingList.contains(ingre.toLowerCase())){
                         points++;
                     }
                 }
@@ -91,5 +95,9 @@ public class RecipeService {
             return filteredRecipes;
         }
         return null;
+    }
+    public List<Recipe> getHotOnTop(List<Recipe> list){
+        list.sort(Comparator.comparing(Recipe::isHot).reversed());
+        return list;
     }
 }
