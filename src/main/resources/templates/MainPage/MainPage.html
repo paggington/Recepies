@@ -50,7 +50,7 @@
             <label for="isHot">All dishes</label>
             <input type="checkbox" id="ings" th:field="*{ings}">
             <label for="ings">Ingredients</label>
-            <input type="submit" value="search">
+            <input type="submit" value="search" id="btn-search">
         </form>
     </header>
     <div class="wrapper" th:each="recipe,reCount:${recipes}">

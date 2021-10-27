@@ -1,3 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+body {
+    text-align: center;
+}
+.form-input {
+    margin-bottom: 100px;
+    display: inline-block;
+}
+.input-holder{
+    margin-bottom: 20px;
+}
 .header{
-    background-color: red;
+    background-color: #130a7b;
+    color:#fbc93d ;
+    width: 100%;
+    float: left;margin-bottom: 50px;
+}
+.header h1{
+    float:left;
+}
+.header form{
+    margin-top:20px;
+}
+.wrapper{
+    padding-top:100px;
 }

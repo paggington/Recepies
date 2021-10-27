@@ -40,15 +40,9 @@
 <body>
 <header class="header">
     <h1>KITCHEN SINK</h1>
-    <form th:action="@{/search}" th:method="POST">
-        <input type="text" maxlength="100" placeholder="Search for a dish">
-
-        <input type="checkbox" id="isHot">
-        <label for="isHot">All dishes</label>
-        <input type="checkbox" id="Ingredients-Search">
-        <label for="Ingredients-Search">Ingredients</label>
-        <input type="submit" value="search">
-    </form>
+    <ul>
+        <li><a href="/">Home</a></li>
+    </ul>
 </header>
 <form th:action="@{/add}" th:method="POST" th:object="${recipe}" enctype="multipart/form-data" class="form-input">
     <div class="input-holder">

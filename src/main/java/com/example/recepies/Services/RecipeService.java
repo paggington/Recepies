@@ -96,6 +96,9 @@ public class RecipeService {
         }
         return null;
     }
+    public void deleteOnId(Long id){
+        recepyRepository.deleteById(id);
+    }
     public List<Recipe> getHotOnTop(List<Recipe> list){
         list.sort(Comparator.comparing(Recipe::isHot).reversed());
         return list;

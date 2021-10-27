@@ -34,11 +34,9 @@ public class AddRecipePageController {
     @PostMapping
     public String postNewRecipe(@Valid @ModelAttribute Recipe recipe,
                                 @RequestParam("image") MultipartFile multipartFile,
-                                @RequestParam("string-for-ingredients") String string_of_ingredients,
-                                BindingResult bindingResult){
-//        if(bindingResult.hasErrors()){
-//            return "AddRecipePage/AddRecipePage";
-//        }
+                                @RequestParam("string-for-ingredients") String string_of_ingredients
+                                ){
+
         Long ElementIndex= recipeService.getMaxIDFromDb();
 
         String fileName=StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename())).substring
@@ -59,6 +57,6 @@ public class AddRecipePageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/";
+        return "redirect:";
     }
 }

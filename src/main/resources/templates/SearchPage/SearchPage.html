@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Document</title>
 </head>
 <style>
@@ -36,10 +36,23 @@
     }
 </style>
 <body>
+<header class="header">
+    <h1>KITCHEN SINK</h1>
+    <form th:action="@{/}" th:method="POST" th:object="${request}">
+        <input id="field" maxlength="100" placeholder="Search for a dish" th:field="*{field}" type="text">
+
+        <input id="isHot" th:field="*{hot}" type="checkbox">
+        <label for="isHot">All dishes</label>
+        <input id="ings" th:field="*{ings}" type="checkbox">
+        <label for="ings">Ingredients</label>
+        <input id="btn-search" type="submit" value="search">
+    </form>
+</header>
     <div class="container" th:each="recipe:${recipes}">
+        <div class="div" th:if="${recipe.getName()}">
         <a  th:href="@{/recipies/{id}(id=${recipe.getId()})}"><div class="item-container">
             <div class="image-container">
-                <img th:src="${recipe.getFilepath()}" class="item-image" height="100" width="100">
+                <img class="item-image" height="100" th:src="${recipe.getFilepath()}" width="100">
             </div>
             <div class="name-container">
                 <h2 th:text="${recipe.getName()}"></h2>
@@ -50,6 +63,10 @@
             <p th:text="${recipe.getDescription()}"></p>
         </div>
         </a>
+        </div>
+        <div class="div" th:unless="${recipe.getName()}">
+            <p>No items found</p>
+        </div>
     </div>
 </body>
 </html>
