@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+    }
+    body {
+        text-align: center;
+    }
+    .form-input {
+        margin-bottom: 100px;
+        display: inline-block;
+    }
+    .input-holder{
+        margin-bottom: 20px;
+    }
+    .header{
+        background-color: aliceblue;
+        width: 100%;
+        float: left;margin-bottom: 50px;
+    }
+    .header h1{
+        float:left;
+    }
+    .header form{
+        margin-top:20px;
+    }
+</style>
+<body>
+    <div class="container" th:each="recipe:${recipes}">
+        <a  th:href="@{/recipies/{id}(id=${recipe.getId()})}"><div class="item-container">
+            <div class="image-container">
+                <img th:src="${recipe.getFilepath()}" class="item-image" height="100" width="100">
+            </div>
+            <div class="name-container">
+                <h2 th:text="${recipe.getName()}"></h2>
+                <div class="gif" th:if="${recipe.isHot()}">
+                    <img src="static/pictures/gifs/hot.gif" width="2%">
+                </div>
+            </div>
+            <p th:text="${recipe.getDescription()}"></p>
+        </div>
+        </a>
+    </div>
+</body>
+</html>
