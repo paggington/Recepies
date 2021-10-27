@@ -16,19 +16,9 @@ public class RecipeService {
 
     //getting List of Recipes From All Users Which marked as Hot
     public List<Recipe> getAllIsHot(){
-        List<Recipe> HotRecipes=new ArrayList<Recipe>();
-        List<Recipe> Recipes=new ArrayList<Recipe>();
-        for(Recipe recipe:recepyRepository.findAll()){
-            if (recipe.isHot()){
-                HotRecipes.add(recipe);
-            }else{
-                Recipes.add(recipe);
-            }
-        }
-        for(Recipe recipe:Recipes){
-            HotRecipes.add(recipe);
-        }
-        return HotRecipes;
+        List<Recipe> allRecipes=recepyRepository.findAll();
+        allRecipes.sort(Comparator.comparing(Recipe::isHot).reversed());
+        return allRecipes;
     }
     //TODO:Make a validation
     public void saveNewRecipe(Recipe recipe){
@@ -83,9 +73,12 @@ public class RecipeService {
             }
             for (Recipe recipe:allRecipes){
                 int points=0;
-                for (String ingre:recipe.getIngredients()){
-                    if(ingList.contains(ingre.toLowerCase())){
-                        points++;
+                for(String ingredient_in_Recipe:recipe.getIngredients()){
+                    String Lowercased_ing_in_recipe=ingredient_in_Recipe.toLowerCase();
+                    for(String ingredient_in_search:ingList){
+                        if(Lowercased_ing_in_recipe.contains(ingredient_in_search.toLowerCase())){
+                            points++ ;
+                        }
                     }
                 }
                 if(points>=1){
