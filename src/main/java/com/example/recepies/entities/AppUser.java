@@ -37,6 +37,17 @@ public class AppUser{
     private String role;
     private boolean isActive;
 
+    public AppUser(String username, String password, String dateOfRegistration, Integer numberOfPublications, float averageReceiptsScore, String lastActivityTime, String role, boolean isActive) {
+        this.username = username;
+        this.password = password;
+        this.dateOfRegistration = dateOfRegistration;
+        this.numberOfPublications = numberOfPublications;
+        AverageReceiptsScore = averageReceiptsScore;
+        this.lastActivityTime = lastActivityTime;
+        this.role = role;
+        this.isActive = isActive;
+    }
+
     public String getCurrentDate(){
         LocalDate date = LocalDate.now();
         return date.toString();
