@@ -1,7 +1,9 @@
 package com.example.recepies.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 import javax.persistence.*;
 import java.text.DateFormat;
@@ -9,17 +11,21 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
+
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @Table(name = "app_users")
-public class AppUser {
+public class AppUser{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(nullable = false,unique = true)
     private String username;
+    @Column(nullable = false)
+    private String password;
     @Column(nullable = false)
     private String dateOfRegistration=getCurrentDate();
     @Column(nullable = false)
@@ -28,17 +34,8 @@ public class AppUser {
     private float AverageReceiptsScore=0.0F;
     @Column(nullable = false)
     private String lastActivityTime;
-
-    public AppUser(String username, String dateOfRegistration, Integer numberOfPublications, float averageReceiptsScore, String lastActivityTime) {
-        this.username = username;
-        this.dateOfRegistration = dateOfRegistration;
-        this.numberOfPublications = numberOfPublications;
-        AverageReceiptsScore = averageReceiptsScore;
-        this.lastActivityTime = lastActivityTime;
-    }
-
-    public AppUser() {
-    }
+    private String role;
+    private boolean isActive;
 
     public String getCurrentDate(){
         LocalDate date = LocalDate.now();
