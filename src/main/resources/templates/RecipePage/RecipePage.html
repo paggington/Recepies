@@ -60,6 +60,8 @@
                 <p th:if="${ingredient}" th:text="${ingredient}"></p>
             </div>
          </div>
+         <p th:text="${recipe.getUsername()}" class="username-div"></p>
+
          <div class="delete-button">
              <form th:action="@{/recipies/delete/{id}(id=${recipe.getId()})}" th:method="DELETE" th:object="${recipe}">
                  <input type="submit" value="Delete">

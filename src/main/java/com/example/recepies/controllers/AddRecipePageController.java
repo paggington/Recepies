@@ -1,10 +1,13 @@
 package com.example.recepies.controllers;
 
 import com.example.recepies.ConfigForStuff;
+import com.example.recepies.DbHelper.MyUserDS;
 import com.example.recepies.FileUploadUtil;
 import com.example.recepies.Services.RecipeService;
 import com.example.recepies.entities.Recipe;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -18,12 +21,12 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/add")
+@AllArgsConstructor
 public class AddRecipePageController {
+    @Autowired
     private final RecipeService recipeService;
     @Autowired
-    public AddRecipePageController(RecipeService recipeService) {
-        this.recipeService = recipeService;
-    }
+    private final MyUserDS myUserDS;
 
     @GetMapping
     public String getAddRecipePage(Model model){
@@ -34,7 +37,8 @@ public class AddRecipePageController {
     @PostMapping
     public String postNewRecipe(@Valid @ModelAttribute Recipe recipe,
                                 @RequestParam("image") MultipartFile multipartFile,
-                                @RequestParam("string-for-ingredients") String string_of_ingredients
+                                @RequestParam("string-for-ingredients") String string_of_ingredients,
+                                Authentication authentication
                                 ){
 
         Long ElementIndex= recipeService.getMaxIDFromDb();
@@ -50,7 +54,8 @@ public class AddRecipePageController {
         recipe.setIngredients(recipeService.getIngredients(string_of_ingredients));
         recipe.setNumberOfViews(1);
         recipe.setRating(0.0F);
-        recipe.setUsername("A");
+        recipe.setUsername(authentication.getName());
+        myUserDS.setNewDataAboutUser(myUserDS.getUserByUsername(authentication.getName()));
         recipeService.saveNewRecipe(recipe);
         try {
             FileUploadUtil.saveFile(uploadDirectory, filename, multipartFile,fileName);

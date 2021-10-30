@@ -25,6 +25,8 @@ public class ErrorsHandling implements ErrorController {
                 return "errorsHandling/error-500";
             }else if(statusCode == HttpStatus.METHOD_NOT_ALLOWED.value()){
                 return "errorsHandling/error-404";
+            }else if(statusCode==HttpStatus.FORBIDDEN.value()){
+                return "errorsHandling/error-403";
             }
         }
         return "errorsHandling/error-404";

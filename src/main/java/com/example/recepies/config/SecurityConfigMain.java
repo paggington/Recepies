@@ -28,7 +28,8 @@ public class SecurityConfigMain extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .clearAuthentication(true)
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
     }
 
     @Override

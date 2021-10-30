@@ -32,4 +32,11 @@ public class MyUserDS implements UserDetailsService {
         appUser.setPassword(new BCryptPasswordEncoder(12).encode(appUser.getPassword()));
         appUserInterface.save(appUser);
     }
+    public AppUser getUserByUsername(String username){
+        AppUser user=appUserInterface.getAppUserByUsername(username).get();
+        return user;
+    }
+    public void setNewDataAboutUser(AppUser user){
+        appUserInterface.setNewDataToDb(user.getNumberOfPublications()+1, user.getUsername());
+    }
 }
